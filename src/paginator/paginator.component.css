@@ -1,0 +1,47 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  --prev-next-margin: 1rem;
+}
+
+ul.pagination {
+  display: flex;
+  list-style: none;
+  user-select: none;
+  padding-left: 0;
+}
+
+li.disabled a.page-link {
+  cursor: not-allowed;
+}
+
+li.active .page-link {
+  background-color: #70c0fe;
+  color: #fff;
+}
+
+a.page-link {
+  display: block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  border-radius: 4px;
+  /* color: #a1a1a1; */
+}
+
+a.page-link:hover {
+  background-color: #ebebeb;
+}
+
+.page-link:not(:disabled):not(.disabled) {
+  cursor: pointer;
+}
+.prev-page {
+  margin-right: var(--prev-next-margin);
+}
+.next-page {
+  margin-left: var(--prev-next-margin);
+  transform: rotate(180deg);
+}
