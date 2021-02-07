@@ -22,12 +22,29 @@ import { tap } from "rxjs/operators";
   templateUrl: "./paginator.component.html",
   styleUrls: ["./paginator.component.css"]
 })
-export class PaginatorComponent extends MatPaginator
-  implements OnInit, DoCheck {
+export class PaginatorComponent extends MatPaginator implements OnInit {
   pages: number[] = [];
 
   firstLastPage = 5;
   pageNeighbours = 1;
+  LEFT_PAGE = "LEFT";
+  RIGHT_PAGE = "RIGHT";
+
+  /**
+   * Helper method for creating a range of numbers
+   * range(1, 5) => [1, 2, 3, 4, 5]
+   */
+  range(from: number, to: number, step = 1) {
+    let i = from;
+    const range = [];
+
+    while (i <= to) {
+      range.push(i);
+      i += step;
+    }
+
+    return range;
+  }
 
   constructor(
     intl: MatPaginatorIntl,
@@ -38,12 +55,8 @@ export class PaginatorComponent extends MatPaginator
   ) {
     super(intl, changeDetectorRef, defaults);
   }
-  ngDoCheck(): void {
-    console.log("Uruchamiam się zawsze :smile:");
-  }
 
   ngOnInit(): void {
-    this.page.pipe(tap(x => (this.pages = this.createPageArray()))).subscribe();
     this.emitPageEvent(0);
     console.log(this.pageSize);
   }
@@ -90,25 +103,59 @@ export class PaginatorComponent extends MatPaginator
     return this.pageIndex;
   }
 
-  private createPageArray(): number[] {
-    let maxArray = this.firstLastPage - 1;
-    if (this.getNumberOfPages() >= this.firstLastPage) {
-    } else {
-      maxArray = this.getNumberOfPages() - 1;
+  fetchPageNumbers() {
+    if (!this.length || this.getNumberOfPages() === 1) return null;
+    const totalPages = this.getNumberOfPages();
+    const currentPage = this.pageIndex;
+    const pageNeighbours = this.pageNeighbours;
+
+    /**
+     * totalNumbers: the total page numbers to show on the control
+     * totalBlocks: totalNumbers + 2 to cover for the left(<) and right(>) controls
+     */
+    const totalNumbers = this.pageNeighbours * 2 + 3;
+    const totalBlocks = totalNumbers + 2;
+
+    if (totalPages > totalBlocks) {
+      const startPage = Math.max(2, currentPage - pageNeighbours);
+      const endPage = Math.min(totalPages - 1, currentPage + pageNeighbours);
+      let pages = this.range(startPage, endPage);
+
+      /**
+       * hasLeftSpill: has hidden pages to the left
+       * hasRightSpill: has hidden pages to the right
+       * spillOffset: number of hidden pages either to the left or to the right
+       */
+      const hasLeftSpill = startPage > 2;
+      const hasRightSpill = totalPages - endPage > 1;
+      const spillOffset = totalNumbers - (pages.length + 1);
+
+      switch (true) {
+        // handle: (1) < {5 6} [7] {8 9} (10)
+        case hasLeftSpill && !hasRightSpill: {
+          const extraPages = this.range(startPage - spillOffset, startPage - 1);
+          pages = [this.LEFT_PAGE, ...extraPages, ...pages];
+          break;
+        }
+
+        // handle: (1) {2 3} [4] {5 6} > (10)
+        case !hasLeftSpill && hasRightSpill: {
+          const extraPages = this.range(endPage + 1, endPage + spillOffset);
+          pages = [...pages, ...extraPages, this.RIGHT_PAGE];
+          break;
+        }
+
+        // handle: (1) < {4 5} [6] {7 8} > (10)
+        case hasLeftSpill && hasRightSpill:
+        default: {
+          pages = [this.LEFT_PAGE, ...pages, this.RIGHT_PAGE];
+          break;
+        }
+      }
+
+      return [1, ...pages, totalPages];
     }
-    console.log("createPageArray", this.getNumberOfPages());
-    if (this.getCurrent() < this.firstLastPage) {
-      return Array.from(Array(maxArray), (x, index) => index + 1);
-    } else if (
-      this.getCurrent() >
-      this.getNumberOfPages() - this.firstLastPage
-    ) {
-      return Array.from(
-        Array(4),
-        (x, index) => index + (this.getNumberOfPages() - this.firstLastPage)
-      );
-    } else {
-      return [this.getCurrent() - 1, this.getCurrent(), this.getCurrent() + 1];
-    }
+
+    return this.range(1, totalPages);
   }
 }
