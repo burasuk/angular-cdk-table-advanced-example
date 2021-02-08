@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DoCheck,
@@ -7,7 +8,8 @@ import {
   OnChanges,
   OnInit,
   Optional,
-  SimpleChanges
+  SimpleChanges,
+  ViewEncapsulation
 } from "@angular/core";
 import {
   MatPaginator,
@@ -20,7 +22,9 @@ import { tap } from "rxjs/operators";
 @Component({
   selector: "app-paginator",
   templateUrl: "./paginator.component.html",
-  styleUrls: ["./paginator.component.css"]
+  styleUrls: ["./paginator.component.css"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class PaginatorComponent extends MatPaginator implements OnInit {
   pages: number[] = [];
