@@ -15,8 +15,7 @@
 		<li class="link" *ngIf="pageNum.page === false && pageNum.value === LEFT_PAGE">
 			<a class="page-link">...</a>
 		</li>
-
-		<li [ngClass]="{'active': pageNum.value -1  === pageIndex}" *ngIf="pageNum.page === true">
+		<li [ngClass]="{'active': pageNum.value -1  === pageIndex }" *ngIf="pageNum.page === true">
 			<a (click)="setPage(pageNum.value -1 )" class="page-link">{{pageNum.value }}</a>
 		</li>
 

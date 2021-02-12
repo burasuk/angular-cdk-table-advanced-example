@@ -32,7 +32,7 @@ export class PaginatorComponent extends MatPaginator implements OnInit {
   pages: number[] = [];
 
   firstLastPage = 5;
-  pageNeighbours = 1;
+  pageNeighbours = 2;
   LEFT_PAGE = "LEFT";
   RIGHT_PAGE = "RIGHT";
 
@@ -64,7 +64,6 @@ export class PaginatorComponent extends MatPaginator implements OnInit {
 
   ngOnInit(): void {
     this.emitPageEvent(0);
-    console.log(this.pageSize);
   }
 
   setPage(page: number) {
@@ -88,31 +87,34 @@ export class PaginatorComponent extends MatPaginator implements OnInit {
     this.emitPageEvent(0);
   }
 
-  showFirstEllipsis(): boolean {
-    return this.getCurrent() >= this.firstLastPage;
-  }
+  // showFirstEllipsis(): boolean {
+  //   return this.getCurrent() >= this.firstLastPage;
+  // }
 
-  showLastEllipsis(): boolean {
-    let numberOfpagesIsSmallerThanFistLastPages =
-      this.getNumberOfPages() <= this.firstLastPage;
-    return !(
-      this.getCurrent() > this.getNumberOfPages() - this.firstLastPage ||
-      numberOfpagesIsSmallerThanFistLastPages
-    );
-  }
+  // showLastEllipsis(): boolean {
+  //   let numberOfpagesIsSmallerThanFistLastPages =
+  //     this.getNumberOfPages() <= this.firstLastPage;
+  //   return !(
+  //     this.getCurrent() > this.getNumberOfPages() - this.firstLastPage ||
+  //     numberOfpagesIsSmallerThanFistLastPages
+  //   );
+  // }
 
-  isFirstPage(): boolean {
-    return this.getCurrent() === 1;
-  }
+  // isFirstPage(): boolean {
+  //   return this.getCurrent() === 1;
+  // }
 
-  getCurrent(): number {
-    return this.pageIndex;
-  }
+  // getCurrent(): number {
+  //   return this.pageIndex;
+  // }
 
+  /**
+   * from: https://www.digitalocean.com/community/tutorials/how-to-build-custom-pagination-with-react
+   */
   fetchPageNumbers() {
     if (!this.length || this.getNumberOfPages() === 1) return null;
     const totalPages = this.getNumberOfPages();
-    const currentPage = this.pageIndex;
+    const currentPage = this.pageIndex + 1;
     const pageNeighbours = this.pageNeighbours;
 
     /**
