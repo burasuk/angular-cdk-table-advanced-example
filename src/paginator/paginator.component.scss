@@ -24,19 +24,14 @@ li.active .page-link {
 }
 
 a.page-link {
+  cursor: pointer;
   display: block;
   padding: 0.5em 1em;
   text-decoration: none;
   border-radius: 4px;
-  /* color: #a1a1a1; */
-}
-
-a.page-link:hover {
-  background-color: #ebebeb;
-}
-
-.page-link:not(:disabled):not(.disabled) {
-  cursor: pointer;
+  &:hover {
+    background-color: #ebebeb;
+  }
 }
 .prev-page {
   margin-right: var(--prev-next-margin);

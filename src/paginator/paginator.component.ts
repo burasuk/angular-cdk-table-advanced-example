@@ -2,13 +2,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DoCheck,
   Inject,
-  Input,
-  OnChanges,
   OnInit,
   Optional,
-  SimpleChanges,
   ViewEncapsulation
 } from "@angular/core";
 import {
@@ -17,13 +13,12 @@ import {
   MatPaginatorIntl,
   MAT_PAGINATOR_DEFAULT_OPTIONS
 } from "@angular/material/paginator";
-import { tap } from "rxjs/operators";
 import { FetchPages } from "./fetch.pages.pipe";
 
 @Component({
   selector: "app-paginator",
   templateUrl: "./paginator.component.html",
-  styleUrls: ["./paginator.component.css"],
+  styleUrls: ["./paginator.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   providers: [FetchPages]
@@ -86,27 +81,6 @@ export class PaginatorComponent extends MatPaginator implements OnInit {
     this.setPage(0);
     this.emitPageEvent(0);
   }
-
-  // showFirstEllipsis(): boolean {
-  //   return this.getCurrent() >= this.firstLastPage;
-  // }
-
-  // showLastEllipsis(): boolean {
-  //   let numberOfpagesIsSmallerThanFistLastPages =
-  //     this.getNumberOfPages() <= this.firstLastPage;
-  //   return !(
-  //     this.getCurrent() > this.getNumberOfPages() - this.firstLastPage ||
-  //     numberOfpagesIsSmallerThanFistLastPages
-  //   );
-  // }
-
-  // isFirstPage(): boolean {
-  //   return this.getCurrent() === 1;
-  // }
-
-  // getCurrent(): number {
-  //   return this.pageIndex;
-  // }
 
   /**
    * from: https://www.digitalocean.com/community/tutorials/how-to-build-custom-pagination-with-react
