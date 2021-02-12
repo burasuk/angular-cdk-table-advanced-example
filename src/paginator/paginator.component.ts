@@ -18,13 +18,15 @@ import {
   MAT_PAGINATOR_DEFAULT_OPTIONS
 } from "@angular/material/paginator";
 import { tap } from "rxjs/operators";
+import { FetchPages } from "./fetch.pages.pipe";
 
 @Component({
   selector: "app-paginator",
   templateUrl: "./paginator.component.html",
   styleUrls: ["./paginator.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [FetchPages]
 })
 export class PaginatorComponent extends MatPaginator implements OnInit {
   pages: number[] = [];

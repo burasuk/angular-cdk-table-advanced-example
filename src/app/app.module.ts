@@ -6,8 +6,8 @@ import { MatSortModule } from "@angular/material/sort";
 
 import { AppComponent } from "./app.component";
 import { HighlightSearch } from "./highlight.pipe";
-import { PaginatorComponent } from "../paginator/paginator.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { PaginatorModule } from "../paginator/paginator.module";
 
 @NgModule({
   imports: [
@@ -16,9 +16,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     CdkTableModule,
     MatSortModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PaginatorModule
   ],
-  declarations: [AppComponent, HighlightSearch, PaginatorComponent],
+  declarations: [AppComponent, HighlightSearch],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

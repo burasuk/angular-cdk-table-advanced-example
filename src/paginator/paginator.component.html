@@ -1,32 +1,40 @@
 <ul class="pagination">
 
-	<ng-container *ngFor="let pageNum of fetchPageNumbers()">
+	<li class="link" [ngClass]="{ 'disabled': pageIndex === 0 }">
+		<a (click)="previousPage()" class="page-link prev-page">
+			<svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12">
+				<g fill="none" fill-rule="evenodd">
+					<path fill="#33313C" d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z"></path>
+				</g>
+			</svg>
+		</a>
+	</li>
 
-		<li class="link" *ngIf="pageNum === LEFT_PAGE">
-			<a (click)="previousPage()" class="page-link prev-page">
-				<svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12">
-					<g fill="none" fill-rule="evenodd">
-						<path fill="#33313C" d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z"></path>
-					</g>
-				</svg>
-			</a>
+	<ng-container *ngFor="let pageNum of fetchPageNumbers() | fetchPages">
+
+		<li class="link" *ngIf="pageNum.page === false && pageNum.value === LEFT_PAGE">
+			<a class="page-link">...</a>
 		</li>
 
-		<li [ngClass]="{'active': pageNum -1  === pageIndex}" *ngIf="pageNum !== LEFT_PAGE || pageNum !== RIGHT_PAGE">
-			<a (click)="setPage(pageNum -1 )" class="page-link">{{pageNum }}</a>
+		<li [ngClass]="{'active': pageNum.value -1  === pageIndex}" *ngIf="pageNum.page === true">
+			<a (click)="setPage(pageNum.value -1 )" class="page-link">{{pageNum.value }}</a>
 		</li>
 
 
-		<li class="link" *ngIf="pageNum === RIGHT_PAGE">
-			<a (click)="nextPage()" class="page-link next-page">
-				<svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12">
-					<g fill="none" fill-rule="evenodd">
-						<path fill="#33313C" d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z"></path>
-					</g>
-				</svg>
-			</a>
+		<li class="link" *ngIf="pageNum.page === false && pageNum.value === RIGHT_PAGE">
+			<a class="page-link">...</a>
 		</li>
 	</ng-container>
+
+	<li class="link" [ngClass]="{ 'disabled': !hasNextPage() }">
+		<a (click)="nextPage()" class="page-link next-page">
+			<svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12">
+				<g fill="none" fill-rule="evenodd">
+					<path fill="#33313C" d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z"></path>
+				</g>
+			</svg>
+		</a>
+	</li>
 </ul>
 <div class="description">
 	<span>{{length}} rekordów</span>
