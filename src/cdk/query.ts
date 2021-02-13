@@ -7,6 +7,11 @@ export abstract class Query<T, F> {
   queryDefinition: QueryDefinition<T, F>[];
   filterValues: F = {} as F;
 
+  filter(filterValues: F): string {
+    this.filterValues = filterValues;
+    return JSON.stringify(filterValues);
+  }
+
   createFilter() {
     let queryDefinition = this.queryDefinition;
 

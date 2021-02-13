@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   pageSize = 10;
 
-  domains: string[];
+  domains: any;
 
   constructor(private userService: UserService, public userQuery: UserQuery) {
     this.queryForm = this.createQueryForm();
@@ -66,8 +66,7 @@ export class AppComponent implements OnInit {
         distinctUntilChanged()
       )
       .subscribe(filterValues => {
-        this.userQuery.filterValues = filterValues;
-        this.users.filter = JSON.stringify(filterValues);
+        this.users.filter = this.userQuery.filter(filterValues);
       });
   }
 
