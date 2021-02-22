@@ -2,49 +2,44 @@ import { Injectable } from "@angular/core";
 import { Query, QueryDefinition } from "./../cdk/query";
 import { User } from "./user";
 
-enum FilterValuesEnum {
-  name,
-  email,
-  website
-}
+type FilterPropName = "name" | "email" | "website";
 
-type EnumKeys = keyof typeof FilterValuesEnum;
-type EnumKeyFields = { [key in EnumKeys]?: any };
+interface U extends User {}
 
-interface IFilterValues extends EnumKeyFields {
-  fullName?: string;
-  email?: string;
-  website?: string;
+interface IFilterValues extends Partial<U> {
+  fullName: string;
+  email: string;
+  website: string;
 }
 
 @Injectable()
-export class UserQuery extends Query<User, IFilterValues> {
-  queryDefinition: QueryDefinition<User, IFilterValues>[] = [
+export class UserQuery extends Query<U, IFilterValues, FilterPropName> {
+  queryDefinition: QueryDefinition<U, IFilterValues, FilterPropName>[] = [
     {
-      filterPropName: FilterValuesEnum[FilterValuesEnum.name],
+      filterPropName: "name",
       queryFn: this.findByName
     },
     {
-      filterPropName: FilterValuesEnum[FilterValuesEnum.email],
+      filterPropName: "email",
       queryFn: this.findByEmail
     },
     {
-      filterPropName: FilterValuesEnum[FilterValuesEnum.website],
+      filterPropName: "email",
       queryFn: this.findByWebsite
     }
   ];
 
-  private findByName(row: User, query: IFilterValues) {
+  private findByName(row: U, query: IFilterValues) {
     return (
       row.fullName.toLowerCase().indexOf(query.fullName.toLowerCase()) != -1
     );
   }
 
-  private findByEmail(row: User, query: IFilterValues) {
+  private findByEmail(row: U, query: IFilterValues) {
     return row.email.toLowerCase().indexOf(query.email.toLowerCase()) != -1;
   }
 
-  private findByWebsite(row: User, query: IFilterValues) {
+  private findByWebsite(row: U, query: IFilterValues) {
     const regexp = new RegExp(`${query.website.toLowerCase()}$`, "i");
     return row.website.toLowerCase().search(regexp) >= 0;
   }

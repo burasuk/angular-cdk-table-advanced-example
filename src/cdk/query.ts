@@ -1,10 +1,10 @@
-export interface QueryDefinition<T, F> {
-  filterPropName: string;
+export interface QueryDefinition<T, F, C> {
+  filterPropName: C;
   queryFn: (row: T, query: F) => boolean;
 }
 
-export abstract class Query<T, F> {
-  queryDefinition: QueryDefinition<T, F>[];
+export abstract class Query<T, F, C extends string> {
+  queryDefinition: QueryDefinition<T, F, C>[];
   filterValues: F = {} as F;
 
   filter(filterValues: F): string {
