@@ -6,11 +6,7 @@ type FilterPropName = "name" | "email" | "website";
 
 interface U extends User {}
 
-interface IFilterValues extends Partial<U> {
-  fullName: string;
-  email: string;
-  website: string;
-}
+interface IFilterValues extends Partial<U> {}
 
 @Injectable()
 export class UserQuery extends Query<U, IFilterValues, FilterPropName> {
