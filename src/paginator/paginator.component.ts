@@ -26,7 +26,6 @@ import { FetchPages } from "./fetch.pages.pipe";
 export class PaginatorComponent extends MatPaginator implements OnInit {
   pages: number[] = [];
 
-  firstLastPage = 5;
   pageNeighbours = 2;
   LEFT_PAGE = "LEFT";
   RIGHT_PAGE = "RIGHT";
