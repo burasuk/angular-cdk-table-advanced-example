@@ -31,6 +31,8 @@ export class PaginatorComponent extends MatPaginator implements OnInit {
   LEFT_PAGE = "LEFT";
   RIGHT_PAGE = "RIGHT";
 
+  selectedPageSize: number;
+
   /**
    * Helper method for creating a range of numbers
    * range(1, 5) => [1, 2, 3, 4, 5]
@@ -59,6 +61,7 @@ export class PaginatorComponent extends MatPaginator implements OnInit {
 
   ngOnInit(): void {
     this.emitPageEvent(0);
+    this.selectedPageSize = this.pageSize;
   }
 
   setPage(page: number) {
@@ -77,6 +80,7 @@ export class PaginatorComponent extends MatPaginator implements OnInit {
   }
 
   changePageSize(selectedPageSize) {
+    console.log(selectedPageSize);
     this.pageSize = selectedPageSize;
     this.setPage(0);
     this.emitPageEvent(0);

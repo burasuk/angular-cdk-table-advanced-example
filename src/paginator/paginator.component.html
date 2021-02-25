@@ -37,7 +37,7 @@
 </ul>
 <div class="description">
 	<span>{{length}} rekordów</span>
-	<select (change)="changePageSize(select.value)" #select>
+	<select (ngModelChange)="changePageSize($event)" #select [(ngModel)]="selectedPageSize">
     <option [value]="pageSize" *ngFor="let pageSize of pageSizeOptions">{{pageSize}}/page</option>
   </select>
 </div>
