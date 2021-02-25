@@ -1,6 +1,6 @@
 <ul class="pagination">
 
-	<li class="link" [ngClass]="{ 'disabled': pageIndex === 0 }">
+	<li class="link" [ngClass]="{ 'disabled': pageIndex === 0 }" *ngIf="getNumberOfPages() > 1">
 		<a (click)="pageIndex > 0 && previousPage()" class="page-link prev-page">
 			<svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12">
 				<g fill="none" fill-rule="evenodd">
