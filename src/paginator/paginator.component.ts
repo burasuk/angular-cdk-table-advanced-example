@@ -3,32 +3,35 @@ import {
   ChangeDetectorRef,
   Component,
   Inject,
+  OnChanges,
   OnInit,
   Optional,
+  SimpleChanges,
   ViewEncapsulation
-} from "@angular/core";
+} from '@angular/core';
 import {
   MatPaginator,
   MatPaginatorDefaultOptions,
   MatPaginatorIntl,
   MAT_PAGINATOR_DEFAULT_OPTIONS
-} from "@angular/material/paginator";
-import { FetchPages } from "./fetch.pages.pipe";
+} from '@angular/material/paginator';
+import { FetchPages } from './fetch.pages.pipe';
 
 @Component({
-  selector: "app-paginator",
-  templateUrl: "./paginator.component.html",
-  styleUrls: ["./paginator.component.scss"],
+  selector: 'app-paginator',
+  templateUrl: './paginator.component.html',
+  styleUrls: ['./paginator.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   providers: [FetchPages]
 })
-export class PaginatorComponent extends MatPaginator implements OnInit {
+export class PaginatorComponent extends MatPaginator
+  implements OnInit, OnChanges {
   pages: number[] = [];
 
   pageNeighbours = 2;
-  LEFT_PAGE = "LEFT";
-  RIGHT_PAGE = "RIGHT";
+  LEFT_PAGE = 'LEFT';
+  RIGHT_PAGE = 'RIGHT';
 
   selectedPageSize: number;
 
@@ -56,6 +59,12 @@ export class PaginatorComponent extends MatPaginator implements OnInit {
     defaults?: MatPaginatorDefaultOptions
   ) {
     super(intl, changeDetectorRef, defaults);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['length']) {
+      this.setPage(0);
+    }
   }
 
   ngOnInit(): void {
