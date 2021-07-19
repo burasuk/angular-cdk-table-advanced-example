@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { Query, QueryDefinition } from "./../cdk/query";
-import { User } from "./user";
+import { Injectable } from '@angular/core';
+import { Query, QueryDefinition } from './../cdk/query';
+import { User } from './user';
 
-type FilterPropName = "name" | "email" | "website";
+type FilterPropName = 'name' | 'email' | 'website';
 
 interface U extends User {}
 
@@ -12,15 +12,15 @@ interface IFilterValues extends Partial<U> {}
 export class UserQuery extends Query<U, IFilterValues, FilterPropName> {
   queryDefinition: QueryDefinition<U, IFilterValues, FilterPropName>[] = [
     {
-      filterPropName: "name",
+      filterPropName: 'name',
       queryFn: this.findByName
     },
     {
-      filterPropName: "email",
+      filterPropName: 'email',
       queryFn: this.findByEmail
     },
     {
-      filterPropName: "email",
+      filterPropName: 'website',
       queryFn: this.findByWebsite
     }
   ];
@@ -36,7 +36,7 @@ export class UserQuery extends Query<U, IFilterValues, FilterPropName> {
   }
 
   private findByWebsite(row: U, query: IFilterValues) {
-    const regexp = new RegExp(`${query.website.toLowerCase()}$`, "i");
+    const regexp = new RegExp(`${query.website.toLowerCase()}$`, 'i');
     return row.website.toLowerCase().search(regexp) >= 0;
   }
 }
